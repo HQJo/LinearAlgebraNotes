@@ -1,25 +1,6 @@
-#! https://zhuanlan.zhihu.com/p/330557394
-```julia
-using LinearAlgebra;
-using Random;
-Random.seed!(42);
-```
+#! https://zhuanlan.zhihu.com/p/335305339
 
-
-```julia
-function prettyshow(x::AbstractArray)
-    show(stdout, MIME"text/plain"(), x)
-    println()
-    nothing
-end
-```
-
-
-
-
-    prettyshow (generic function with 1 method)
-
-
+本文使用 jupyter notebook 和 Julia 写成，原始 notebook 可在 [github 仓库](https://github.com/HQJo/LinearAlgebraNotes) 找到。
 
 ## 矩阵
 
@@ -83,19 +64,21 @@ end
 
 ```julia
 x =  mod.(rand(Int, n), 10)
-println(length(x), "\t", x)
+@prettyshow x
 y = A * x
-println(length(y), "\t", y)
+@prettyshow y
 ```
 
-    4	[6, 8, 0, 8]
-    3	[112, 138, 92]
+    x is 4-element Array{Int64,1}:
+     6
+     8
+     0
+     8
+    y is 3-element Array{Int64,1}:
+     112
+     138
+      92
 
-
-
-```julia
-
-```
 
 ## 矩阵向量乘
 
@@ -109,9 +92,9 @@ $$
 
 
 ```julia
-prettyshow(A)
-prettyshow(x)
-prettyshow(y)
+@prettyshow A
+@prettyshow x
+@prettyshow y
 println()
 
 # 验证 y 的每一个元素
@@ -124,16 +107,16 @@ for i in 1:m
 end
 ```
 
-    3×4 Array{Int64,2}:
+    A is 3×4 Array{Int64,2}:
      4  3  7  8
      7  6  3  6
      6  2  1  5
-    4-element Array{Int64,1}:
+    x is 4-element Array{Int64,1}:
      6
      8
      0
      8
-    3-element Array{Int64,1}:
+    y is 3-element Array{Int64,1}:
      112
      138
       92
@@ -154,7 +137,7 @@ $$
 
 ```julia
 # 矩阵向量乘结果：
-prettyshow(y)
+@prettyshow y
 println()
 
 # 线性组合结果：
@@ -162,26 +145,25 @@ y2 = zero(y)
 for i in 1:n
     y2 += x[i] * A[:, i]
 end
-prettyshow(y2)
+@prettyshow y2
 
-print(y2, " = ")
 for i in 1:n
     print("$(x[i])×$(A[:, i])", i == n ? "" : " + ")
 end
 ```
 
-    3-element Array{Int64,1}:
+    y is 3-element Array{Int64,1}:
      112
      138
       92
 
-    3-element Array{Int64,1}:
+    y2 is 3-element Array{Int64,1}:
      112
      138
       92
-    [112, 138, 92] = 6×[4, 7, 6] + 8×[3, 6, 2] + 0×[7, 3, 1] + 8×[8, 6, 5]
+    6×[4, 7, 6] + 8×[3, 6, 2] + 0×[7, 3, 1] + 8×[8, 6, 5]
 
-第三种角度，则是线性变换，矩阵向量乘将 $\mathbb{R}^{n}$ 中的向量变换成了 $\mathbb{R}^{m}$ 中的向量。
+第三种角度，则是线性变换，矩阵向量乘将 $\mathbb{R}^{n}$ 中的向量变换成了 $\mathbb{R}^{m}$ 中的向量。在上面已经讲过，这里不再重复了。
 
 另外，两个矩阵相乘，也可以从行/列向量角度去看。设 $A \in \mathbb{R}^{m\times n}$, $B \in \mathbb{R}^{n \times p}$：
 
